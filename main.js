@@ -27,16 +27,20 @@ let overlays = {
 
 // Layercontrol
 L.control.layers({
-    "BasemapAT grau": L.tileLayer('https://mapsneu.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png', {
-        maxZoom: 19,
-        attribution: 'Hintergrundkarte: <a href="https://www.basemap.at">basemap.at</a>'
-    }).addTo(map)
+    "BasemapAT": L.tileLayer.provider('BasemapAt.basemap').addTo(map),
+    "BasemapAT grau": L.tileLayer.provider('BasemapAt.grau').addTo(map),
+    "BasemapAT Overlay": L.tileLayer.provider('BasemapAT.overlay').addTo(map),
+    "BasemapAT HighDPI": L.tileLayer.provider('BasemapAt.highdpi').addTo(map),
+    "BasemapAT Orthofoto": L.tileLayer.provider('BasemapAt.orthofoto').addTo(map),
+    "BasemapAT Relief": L.tileLayer.provider('BasemapAt.terrain').addTo(map),
+    "BasemapAT Oberfläche": L.tileLayer.provider('BasemapAt.surface').addTo(map),
+    }
 
-}, {
+, {
     "Sehenswürdigkeiten": overlays.sights,
     "Vienna sightseeing Linien": overlays.lines,
     "Vienna sightseeing Haltestellen": overlays.stops,
-    "Fußgängerzonen": overlays.zones,
+    "Fußgängerzonen": overlays.zones
 
 }).addTo(map);
 
@@ -53,7 +57,7 @@ async function loadSights(url) {
     console.log(jsondata)
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>'
-    }).addTo(map);
+    }).addTo(overlays.sights);
 }
 
 async function loadLines(url) {
@@ -63,7 +67,7 @@ async function loadLines(url) {
     console.log(jsondata)
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>'
-    }).addTo(map);
+    }).addTo(overlays.lines);
 }
 
 async function loadStops(url) {
@@ -73,7 +77,7 @@ async function loadStops(url) {
     console.log(jsondata)
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>'
-    }).addTo(map);
+    }).addTo(overlays.stops);
 }
 async function loadZones(url) {
     console.log(url)
@@ -82,7 +86,7 @@ async function loadZones(url) {
     console.log(jsondata)
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>'
-    }).addTo(map);
+    }).addTo(overlays.zones);
 }
 
 
