@@ -22,5 +22,16 @@ let marker = L.marker([stephansdom.lat, stephansdom.lng]).addTo(map);
 marker.bindPopup(stephansdom.title).openPopup();
 
 // Maßstab
-L.control.scale({metric:true, imperial: false}).addTo(map)
+L.control.scale({ metric: true, imperial: false }).addTo(map);
 
+
+// Sehenswürdigkeiten
+async function loadSights(url) {
+    console.log(url)
+    let response = await fetch(url);
+    let jsondata = await response.json();
+    console.log(jsondata)
+    L.geoJSON(jsondata).addTo(map);
+}
+
+loadSights('https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json')
