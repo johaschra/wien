@@ -18,6 +18,21 @@ L.tileLayer('https://mapsneu.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{
 }).addTo(map);
 
 
+// Layercontrol
+L.control.layers({
+    "BasemapAT grau": L.tileLayer('https://mapsneu.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png', {
+        maxZoom: 19,
+        attribution: 'Hintergrundkarte: <a href="https://www.basemap.at">basemap.at</a>'
+    }).addTo(map)
+
+}, {
+    "Sehenswürdigkeiten": L.featureGroup().addTo(map),
+    "Vienna sightseeing Linien": L.featureGroup().addTo(map),
+    "Vienna sightseeing Haltestellen": L.featureGroup().addTo(map),
+    "Fußgängerzonen": L.featureGroup().addTo(map),
+
+}).addTo(map);
+
 
 // Maßstab
 L.control.scale({ metric: true, imperial: false }).addTo(map);
