@@ -59,8 +59,13 @@ async function loadSights(url) {
                         iconAnchor: [16, 37],
                         popupAnchor: [0, -37],
                     })
-                });
-        }
+                }
+            );
+        },
+        onEachFeature: function (feature, layer) {
+            console.log(feature.properties);
+            layer.bindPopup(`
+                <img src="${feature.properties.THUMBNAIL}" alt= "*">`); }
     }).addTo(overlays.sights);
 }
 
