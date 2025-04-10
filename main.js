@@ -11,11 +11,6 @@ let stephansdom = {
 // Karte initialisieren
 let map = L.map("map").setView([stephansdom.lat, stephansdom.lng], stephansdom.zoom);
 
-// Hintergrundkarte definieren
-L.tileLayer('https://mapsneu.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png', {
-    maxZoom: 19,
-    attribution: 'Hintergrundkarte: <a href="https://www.basemap.at">basemap.at</a>'
-}).addTo(map);
 
 // Overlays definieren
 let overlays = {
@@ -23,17 +18,17 @@ let overlays = {
     lines: L.featureGroup().addTo(map),
     stops: L.featureGroup().addTo(map),
     zones: L.featureGroup().addTo(map),
-}
+};
 
 // Layercontrol
 L.control.layers({
-    "BasemapAT": L.tileLayer.provider('BasemapAt.basemap'),
-    "BasemapAT grau": L.tileLayer.provider('BasemapAt.grau').addTo(map),
+    "BasemapAT": L.tileLayer.provider('BasemapAT.basemap'),
+    "BasemapAT grau": L.tileLayer.provider('BasemapAT.grau').addTo(map),
     "BasemapAT Overlay": L.tileLayer.provider('BasemapAT.overlay'),
-    "BasemapAT HighDPI": L.tileLayer.provider('BasemapAt.highdpi'),
-    "BasemapAT Orthofoto": L.tileLayer.provider('BasemapAt.orthofoto'),
-    "BasemapAT Relief": L.tileLayer.provider('BasemapAt.terrain'),
-    "BasemapAT Oberfläche": L.tileLayer.provider('BasemapAt.surface'),
+    "BasemapAT HighDPI": L.tileLayer.provider('BasemapAT.highdpi'),
+    "BasemapAT Orthofoto": L.tileLayer.provider('BasemapAT.orthofoto'),
+    "BasemapAT Relief": L.tileLayer.provider('BasemapAT.terrain'),
+    "BasemapAT Oberfläche": L.tileLayer.provider('BasemapAT.surface'),
 }, {
     "Sehenswürdigkeiten": overlays.sights,
     "Vienna sightseeing Linien": overlays.lines,
@@ -44,7 +39,7 @@ L.control.layers({
 
 
 // Maßstab
-L.control.scale({ metric: true, imperial: false }).addTo(map);
+L.control.scale({imperial: false }).addTo(map);
 
 
 // Sehenswürdigkeiten
@@ -60,10 +55,10 @@ async function loadSights(url) {
 
 // Touristische Kraftfahrtlinien
 async function loadLines(url) {
-    console.log(url)
+    //console.log(url)
     let response = await fetch(url);
     let jsondata = await response.json();
-    console.log(jsondata)
+    //console.log(jsondata)
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>'
     }).addTo(overlays.lines);
