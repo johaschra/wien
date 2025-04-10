@@ -27,20 +27,18 @@ let overlays = {
 
 // Layercontrol
 L.control.layers({
-    "BasemapAT": L.tileLayer.provider('BasemapAt.basemap').addTo(map),
+    "BasemapAT": L.tileLayer.provider('BasemapAt.basemap'),
     "BasemapAT grau": L.tileLayer.provider('BasemapAt.grau').addTo(map),
-    "BasemapAT Overlay": L.tileLayer.provider('BasemapAT.overlay').addTo(map),
-    "BasemapAT HighDPI": L.tileLayer.provider('BasemapAt.highdpi').addTo(map),
-    "BasemapAT Orthofoto": L.tileLayer.provider('BasemapAt.orthofoto').addTo(map),
-    "BasemapAT Relief": L.tileLayer.provider('BasemapAt.terrain').addTo(map),
-    "BasemapAT Oberfläche": L.tileLayer.provider('BasemapAt.surface').addTo(map),
-    }
-
-, {
+    "BasemapAT Overlay": L.tileLayer.provider('BasemapAT.overlay'),
+    "BasemapAT HighDPI": L.tileLayer.provider('BasemapAt.highdpi'),
+    "BasemapAT Orthofoto": L.tileLayer.provider('BasemapAt.orthofoto'),
+    "BasemapAT Relief": L.tileLayer.provider('BasemapAt.terrain'),
+    "BasemapAT Oberfläche": L.tileLayer.provider('BasemapAt.surface'),
+}, {
     "Sehenswürdigkeiten": overlays.sights,
     "Vienna sightseeing Linien": overlays.lines,
     "Vienna sightseeing Haltestellen": overlays.stops,
-    "Fußgängerzonen": overlays.zones
+    "Fußgängerzonen": overlays.zones,
 
 }).addTo(map);
 
@@ -51,15 +49,16 @@ L.control.scale({ metric: true, imperial: false }).addTo(map);
 
 // Sehenswürdigkeiten
 async function loadSights(url) {
-    console.log(url)
+    //console.log(url)
     let response = await fetch(url);
     let jsondata = await response.json();
-    console.log(jsondata)
+    //console.log(jsondata)
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>'
     }).addTo(overlays.sights);
 }
 
+// Touristische Kraftfahrtlinien
 async function loadLines(url) {
     console.log(url)
     let response = await fetch(url);
@@ -70,20 +69,23 @@ async function loadLines(url) {
     }).addTo(overlays.lines);
 }
 
+// Touristische Kraftfahrtlinien Haltestellen
 async function loadStops(url) {
-    console.log(url)
+    //console.log(url)
     let response = await fetch(url);
     let jsondata = await response.json();
-    console.log(jsondata)
+    //console.log(jsondata)
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>'
     }).addTo(overlays.stops);
 }
+
+// Fußgängerzonen
 async function loadZones(url) {
-    console.log(url)
+    //console.log(url)
     let response = await fetch(url);
     let jsondata = await response.json();
-    console.log(jsondata)
+    //console.log(jsondata)
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>'
     }).addTo(overlays.zones);
@@ -91,9 +93,7 @@ async function loadZones(url) {
 
 
 
-loadSights('https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json')
-
-
-loadLines('https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json')
-loadStops('https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json')
-loadZones('https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json')
+loadSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json")
+loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json")
+loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json")
+loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json")
