@@ -11,7 +11,6 @@ let stephansdom = {
 // Karte initialisieren
 let map = L.map("map").setView([stephansdom.lat, stephansdom.lng], stephansdom.zoom);
 
-
 // Overlays definieren
 let overlays = {
     sights: L.featureGroup().addTo(map),
@@ -84,7 +83,16 @@ async function loadZones(url) {
     let jsondata = await response.json();
     //console.log(jsondata)
     L.geoJSON(jsondata, {
-        attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>'
+        attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
+        style: function (feature) {
+            console.log(feature)
+            return {
+                color: "#F012BE", // pink in rgb format
+                weight: 1,
+                opacity: 0.4,
+                fillOpacity: 0.1,
+            }
+        }
     }).addTo(overlays.zones);
 }
 
