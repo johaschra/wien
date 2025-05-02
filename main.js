@@ -179,7 +179,7 @@ async function loadHotels(url) {
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
         pointToLayer: function (feature, latlng) {
-            //console.log(feature.properties);
+            console.log(feature.properties);
             let iconName;
             if (feature.properties.KATEGORIE_TXT == '5*') { iconName = 'hotel_5stars.png'; }
             else if (feature.properties.KATEGORIE_TXT == '4*') { iconName = 'hotel_4stars.png'; }
@@ -195,6 +195,19 @@ async function loadHotels(url) {
                 })
             });
 
+        },
+        onEachFeature: function (feature, layer) {
+            //console.log(feature.properties);
+            layer.bindPopup(`
+
+                <h3>${feature.properties.BETRIEB}</h3>
+                <h4>${feature.properties.BETRIEBSART_TXT} ${feature.properties.KATEGORIE_TXT}</h4>
+                <hr>
+                <adress>Adr.: ${feature.properties.ADRESSE}</adress><br>
+                Tel.: <a href="tel:${feature.properties.KONTAKT_TEL}" >${feature.properties.KONTAKT_TEL}</a><br>
+                <a href="mailto:${feature.properties.KONTAKT_EMAIL}" >${feature.properties.KONTAKT_EMAIL}</a><br>
+                <a href="${feature.properties.WEBLINK1}" target= "wien">Homepage</a>
+                `);
         }
 
     }).addTo(overlays.hotels);
