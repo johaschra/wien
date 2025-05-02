@@ -84,7 +84,7 @@ async function loadLines(url) {
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
         style: function (feature) {
-            //console.log(feature.properties);
+            console.log(feature.properties);
             let lineColor = "";
             if (feature.properties.LINE_NAME == "Yellow Line") { lineColor = "#FFDC00"; }
             else if (feature.properties.LINE_NAME == "Blue Line") { lineColor = "#0074D9"; }
@@ -99,6 +99,15 @@ async function loadLines(url) {
                 opacity: 0.7, // line opacity
                 fillOpacity: 0.7, // fill opacity
             }
+        },
+        onEachFeature: function (feature, layer) {
+            //console.log(feature.properties);
+            layer.bindPopup(`
+                
+                <h4><i class="fa-solid fa-bus"></i> ${feature.properties.LINE_NAME}</h4>
+                <p><i class="fa-regular fa-circle-stop"></i> ${feature.properties.FROM_NAME}<br>
+                <i class="fa-solid fa-arrow-down"></i><br>
+                <i class="fa-regular fa-circle-stop"></i> ${feature.properties.TO_NAME}</p>`);
         }
     }).addTo(overlays.lines);
 }
