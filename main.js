@@ -48,10 +48,8 @@ L.control.scale({ imperial: false }).addTo(map);
 
 // Sehenswürdigkeiten
 async function loadSights(url) {
-    //console.log(url)
     let response = await fetch(url);
     let jsondata = await response.json();
-    //console.log(jsondata)
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
         pointToLayer: function (feature, latlng) {
@@ -66,7 +64,7 @@ async function loadSights(url) {
             );
         },
         onEachFeature: function (feature, layer) {
-            console.log(feature.properties);
+            //console.log(feature.properties);
             layer.bindPopup(`
                 <img src="${feature.properties.THUMBNAIL}" alt= "*">
                 <h4>${feature.properties.NAME}</h4>
@@ -86,7 +84,7 @@ async function loadLines(url) {
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
         style: function (feature) {
-            console.log(feature.properties);
+            //console.log(feature.properties);
             let lineColor = "";
             if (feature.properties.LINE_NAME == "Yellow Line") { lineColor = "#FFDC00"; }
             else if (feature.properties.LINE_NAME == "Blue Line") { lineColor = "#0074D9"; }
@@ -115,6 +113,7 @@ async function loadStops(url) {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
         pointToLayer: function (feature, latlng) {
             line_id = feature.properties.LINE_ID;
+            //console.log(feature.properties);
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: `icons/bus_${line_id}.png`,
@@ -135,7 +134,7 @@ async function loadZones(url) {
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
         style: function (feature) {
-            console.log(feature)
+            //console.log(feature)
             return {
                 color: "#F012BE", // pink in rgb format
                 weight: 1,
@@ -147,7 +146,6 @@ async function loadZones(url) {
 }
 
 // Hotels und Unterkünfte
-
 async function loadHotels(url) {
     //console.log(url)
     let response = await fetch(url);
@@ -156,7 +154,7 @@ async function loadHotels(url) {
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
         pointToLayer: function (feature, latlng) {
-            console.log(feature.properties);
+            //console.log(feature.properties);
             let iconName;
             if (feature.properties.KATEGORIE_TXT == '5*') { iconName = 'hotel_5stars.png'; }
             else if (feature.properties.KATEGORIE_TXT == '4*') { iconName = 'hotel_4stars.png'; }
