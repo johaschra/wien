@@ -84,7 +84,7 @@ async function loadLines(url) {
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
         style: function (feature) {
-            console.log(feature.properties);
+            //console.log(feature.properties);
             let lineColor = "";
             if (feature.properties.LINE_NAME == "Yellow Line") { lineColor = "#FFDC00"; }
             else if (feature.properties.LINE_NAME == "Blue Line") { lineColor = "#0074D9"; }
@@ -151,13 +151,21 @@ async function loadZones(url) {
     L.geoJSON(jsondata, {
         attribution: 'Datenquelle: <a href= "https://data.wien.gv.at"> Stadt Wien </a>',
         style: function (feature) {
-            //console.log(feature)
+            //console.log(feature.properties);
             return {
                 color: "#F012BE", // pink in rgb format
                 weight: 1,
                 opacity: 0.4,
                 fillOpacity: 0.1,
             }
+        },
+        onEachFeature: function (feature, layer) {
+            //console.log(feature.properties);
+            layer.bindPopup(`
+                
+                <h4>Fußgängerzone <adress>${feature.properties.ADRESSE}</adress></h4>
+                <p><i class="fa-regular fa-clock"></i> ${feature.properties.ZEITRAUM}<br>
+                <i class="fa-solid fa-circle-info"></i> ${feature.properties.AUSN_TEXT}</p>`);
         }
     }).addTo(overlays.zones);
 }
